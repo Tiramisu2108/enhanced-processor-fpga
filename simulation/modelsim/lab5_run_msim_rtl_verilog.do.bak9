@@ -1,0 +1,23 @@
+transcript on
+if {[file exists rtl_work]} {
+	vdel -lib rtl_work -all
+}
+vlib rtl_work
+vmap work rtl_work
+
+vlog -vlog01compat -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/ram128x9.v}
+vlog -sv -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/lab5.sv}
+vlog -sv -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/add_sub.sv}
+vlog -sv -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/dec3to8.sv}
+vlog -sv -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/full_adder.sv}
+vlog -sv -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/mux16to1.sv}
+vlog -sv -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/top_module.sv}
+
+vlog -sv -work work +incdir+D:/HK252/Digital_systems/Lab/lab5 {D:/HK252/Digital_systems/Lab/lab5/top_module_tb.sv}
+
+vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cyclonev_ver -L cyclonev_hssi_ver -L cyclonev_pcie_hip_ver -L rtl_work -L work -voptargs="+acc"  top_module_tb
+
+add wave *
+view structure
+view signals
+run -all
